@@ -9,6 +9,14 @@
 #define Sep _
 #define fixedPref .
 
+typedef enum _bool {
+    false = 0,
+    true = 1
+} Bool;
+
+typedef int **Board;
+typedef Bool **BoolBoard;
+
 typedef enum _error {
     EInvalidNumberOfCells,
     ECellIsFixed,
@@ -28,18 +36,14 @@ typedef enum _prompt {
 } Prompt;
 
 typedef struct _game {
-    int **solved_matrix[N * M][N * M];
-    int **user_matrix[N * M][N * M];
+    Board solved_matrix;
+    Board user_matrix;
+    BoolBoard fixed_matrix;
 } Game;
-
-typedef enum _bool {
-    false = 0,
-    true = 1
-} Bool;
 
 Game *createGame(int fixedAmount);
 
-void DestroyGame();
+void destroyGame(Game *game);
 
 
 typedef struct _coordinate {

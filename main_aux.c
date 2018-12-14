@@ -61,26 +61,36 @@ int randLimit(int limit) {
 }
 
 int askUserForHintsAmount() {
-    return 0;
+    return 20;
 }
 
 Game *createGame(int fixedAmount) {
     Game *game = malloc(sizeof(Game));
-    int pInt[9][9] = *(int) malloc(N * N * M * M * sizeof(int));
-    game->user_matrix = *pInt;
+    game->solved_matrix = (int **) malloc(N * N * sizeof(int *));
+    game->user_matrix = (int **) malloc(N * N * sizeof(int *));
+    game->fixed_matrix = (Bool **) malloc(N * N * sizeof(Bool *));
+    {
+        int i;
+        for (i = 0; i < N * M; ++i) {
+            game->solved_matrix[i] = (int *) malloc(N * N * sizeof(int));
+            game->user_matrix[i] = (int *) malloc(N * N * sizeof(int));
+            game->fixed_matrix[i] = (Bool *) malloc(N * N * sizeof(Bool));
+        }
+    }
+
+    generateGame(game, fixedAmount);
+
     return game;
 }
 
-void deterministicSolve(Game *game) {
-
-}
-
-Coordinate *getEmptyCells(Game *game) {
-    return NULL;
+void destroyGame(Game *game) {
+    free(game->solved_matrix);
+    free(game->user_matrix);
+    free(game->fixed_matrix);
+    free(game);
 }
 
 Input askUserForNextTurn() {
     Input result;
     return result;
 }
-

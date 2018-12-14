@@ -15,7 +15,7 @@
 #include "solver.h"
 #include "SPBufferset.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
     /*
      * init
      * */
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
                     hint(&game, input.coordinate);
                     break;
                 case VALIDATE:
-                    deterministicSolve(&game);
+                    solveBoard(game.user_matrix, game.solved_matrix, true);
                     break;
                 case RESTART:
                     shouldRestart = true;
@@ -54,9 +54,8 @@ int main(int argc, char **argv) {
                     isGameOver = true;
             }
         }
-
-        /* TODO: destroy matrix?*/
     }
+    destroyGame(&game);
 
     exit(1);
 }

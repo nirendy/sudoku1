@@ -1,16 +1,25 @@
+#ifndef HW2_SOLVER_H
+#define HW2_SOLVER_H
+
 #include "game.h"
 #include "main_aux.h"
 
 
-Coordinate *getEmptyCells(Game *game);
+void clearBoard(Board board);
 
-int *getPossibleValues(Game *game, Coordinate *coordinate);
+int getEmptyCells(const Board board, Coordinate *emptyCells);
 
-Game *createGame(int fixedAmount);
+/*int getPossibleValues(Game *game, Coordinate coordinate, int possibleValues[N * M]);*/
 
-void deterministicSolve(Game *game);
+void generateGame(Game *game, int fixedAmount);
+
+Bool solveBoard(const Board board, Board solvedBoard, Bool isDeterministic);
+
+/*void coordinateNeighbours(Game *game, Coordinate coordinate, Coordinate neighbours[2* N * M - N - M + 1]);*/
+
 
 Bool isFinished(Game *game);
 
 
+#endif
 
