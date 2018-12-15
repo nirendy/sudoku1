@@ -35,13 +35,13 @@ int main(int argc, char *argv[]) {
 
             switch (input.command) {
                 case SET:
-                	!isSolved(&game) ? setCoordinate(&game, input): printError(EInvalidCommand, INVALID);
+                    !isSolved(&game) ? setCoordinate(&game, input) : printError(EInvalidCommand, INVALID);
                     break;
                 case HINT:
-                	!isSolved(&game) ?  hint(&game, input.coordinate): printError(EInvalidCommand, INVALID);
+                    !isSolved(&game) ? hint(&game, input.coordinate) : printError(EInvalidCommand, INVALID);
                     break;
                 case VALIDATE:
-                	!isSolved(&game) ? validate(&game): printError(EInvalidCommand, INVALID);
+                    !isSolved(&game) ? validate(&game) : printError(EInvalidCommand, INVALID);
                     break;
                 case RESTART:
                     shouldRestart = true;

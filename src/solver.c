@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "solver.h"
 
-    Coordinate emptyCells[N * N * M * M];
+Coordinate emptyCells[N * N * M * M];
+
 Bool isSolved(Game *game) {
     int emptyCellsCount;
     emptyCellsCount = getEmptyCells(game->user_matrix, emptyCells);
@@ -116,9 +117,7 @@ int randomRemoveArrayIndex(int *arr, int arrLength) {
     return removeArrayIndex(arr, arrLength, randLimit(arrLength));
 }
 
-Bool
-solveBoardRec(Board board, Bool isDeterministic, Coordinate *emptyCells, int emptyCellsCount,
-              int start) {
+Bool solveBoardRec(Board board, Bool isDeterministic, Coordinate *emptyCells, int emptyCellsCount, int start) {
     int possibleValuesCount;
     int possibleValues[N * M];
     Coordinate currentCoordinate = emptyCells[start];
@@ -136,7 +135,7 @@ solveBoardRec(Board board, Bool isDeterministic, Coordinate *emptyCells, int emp
         int nextValue;
 
         if (possibleValuesCount == 1 || isDeterministic) {
-            nextValue = removeArrayIndex(possibleValues,possibleValuesCount, 0);
+            nextValue = removeArrayIndex(possibleValues, possibleValuesCount, 0);
         } else {
             nextValue = randomRemoveArrayIndex(possibleValues, possibleValuesCount);
         }
@@ -177,7 +176,6 @@ void generateFixedBoard(BoolBoard board, int fixedAmount) {
         }
     }
 }
-
 
 void generateGame(Game *game, int fixedAmount) {
     int i, j;

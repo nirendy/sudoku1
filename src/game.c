@@ -23,13 +23,13 @@ Bool isValueInNeighbours(Game *game, Coordinate coordinate, int value) {
 void setCoordinate(Game *game, Input input) {
     if (isCoordinateFixed(game, input.coordinate)) {
         printError(ECellIsFixed, INVALID);
-    } else if (isValueInNeighbours(game, input.coordinate, input.value)) {
+    } else if (input.value != 0 && isValueInNeighbours(game, input.coordinate, input.value)) {
         printError(EValueIsInvalid, INVALID);
     } else {
         game->user_matrix[input.coordinate.i][input.coordinate.j] = input.value;
         printBoard(game->user_matrix, game->fixed_matrix);
         if (isSolved(game))
-        	printPrompt(PSuccess,0);
+            printPrompt(PSuccess, 0);
     }
 }
 
