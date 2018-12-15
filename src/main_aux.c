@@ -3,25 +3,31 @@
 #include <string.h>
 #include "main_aux.h"
 #include "solver.h"
+#include "parser.h"
 
 
-void printError(Error2 err, Command command) {
+void printError(Error err, Command command) {
+    if (err == EFunctionFailed && command == INVALID) {
+        printf("Unreachable Code Error");
+        exit(0);
+    }
+
     switch (err) {
         case EInvalidNumberOfCells:
-            printf("Error2: invalid number of cells to fill (should be between 0 and %d)\n", N * M - 1);
+            printf("Error: invalid number of cells to fill (should be between 0 and %d)\n", N * M - 1);
             break;
         case ECellIsFixed:
-            printf("Error2: cell is fixed\n");
+            printf("Error: cell is fixed\n");
             break;
         case EValueIsInvalid:
-            printf("Error2: value is invalid\n");
+            printf("Error: value is invalid\n");
             break;
         case EInvalidCommand:
-            printf("Error2: invalid command\n");
+            printf("Error: invalid command\n");
             break;
         case EFunctionFailed:
             /* TODO: fill command*/
-            printf("Error2: <%d> has failed\n", command);
+            printf("Error: <%d> has failed\n", command);
             break;
     }
 }
@@ -91,6 +97,11 @@ void destroyGame(Game *game) {
 }
 
 Input askUserForNextTurn() {
-    Input result;
-    return result;
+    Input input;
+
+    do {
+        input = parseCommand();
+    } while (input.command == INVALID);
+
+    return input;
 }

@@ -23,7 +23,7 @@ typedef enum _error {
     EValueIsInvalid,
     EInvalidCommand,
     EFunctionFailed
-} Error2;
+} Error;
 
 typedef enum _prompt {
     PEnterFixedAmount,
@@ -60,7 +60,8 @@ typedef enum _command {
     HINT,
     VALIDATE,
     RESTART,
-    EXIT
+    EXIT,
+    INVALID
 } Command;
 
 typedef struct _input {
@@ -73,15 +74,13 @@ Input *createInput();
 
 void DestroyInput();
 
-void printError(Error2 err, Command command);
+void printError(Error err, Command command);
 
 void printPrompt(Prompt prompt, int num1);
 
 Input askUserForNextTurn();
 
 int askUserForHintsAmount();
-
-void printBoard(Game *game);
 
 int randLimit(int limit);
 

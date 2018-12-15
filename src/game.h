@@ -3,7 +3,9 @@
 
 #include "main_aux.h"
 
-int hint(Game *game, Coordinate coordinate);
+void hint(Game *game, Coordinate coordinate);
+
+void validate(Game *game);
 
 void setCoordinate(Game *game, Input input);
 

@@ -9,7 +9,7 @@ void clearBoard(Board board);
 
 int getEmptyCells(const Board board, Coordinate *emptyCells);
 
-/*int getPossibleValues(Game *game, Coordinate coordinate, int possibleValues[N * M]);*/
+int getPossibleValues(Board board, Coordinate coordinate, int *possibleValues);
 
 void generateGame(Game *game, int fixedAmount);
 

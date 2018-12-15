@@ -1,12 +1,3 @@
-/*
- * defines
- * */
-
-#define START_TURN USER
-
-/*
- * includes
- * */
 #include <stdio.h>
 #include <stdlib.h>
 #include "main_aux.h"
@@ -33,8 +24,11 @@ int main(int argc, char *argv[]) {
          * */
         game = *createGame(fixedAmount);
         shouldRestart = false;
+        printBoard(game.user_matrix, game.fixed_matrix);
 
-        while (isFinished(&game) && !shouldRestart) {
+        printBoard(game.solved_matrix, game.fixed_matrix);
+
+        while (!isFinished(&game) && !shouldRestart) {
             input = askUserForNextTurn();
 
             switch (input.command) {
@@ -45,13 +39,17 @@ int main(int argc, char *argv[]) {
                     hint(&game, input.coordinate);
                     break;
                 case VALIDATE:
-                    solveBoard(game.user_matrix, game.solved_matrix, true);
+                    validate(&game);
                     break;
                 case RESTART:
                     shouldRestart = true;
                     break;
                 case EXIT:
                     isGameOver = true;
+                    break;
+                case INVALID:
+                    printf("Unreachable Code Error");
+                    exit(0);
             }
         }
     }

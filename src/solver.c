@@ -136,7 +136,7 @@ solveBoardRec(Board board, Bool isDeterministic, Coordinate *emptyCells, int emp
         int nextValue;
 
         if (possibleValuesCount == 1 || isDeterministic) {
-            nextValue = possibleValues[0];
+            nextValue = removeArrayIndex(possibleValues,possibleValuesCount, 0);
         } else {
             nextValue = randomRemoveArrayIndex(possibleValues, possibleValuesCount);
         }
@@ -146,6 +146,8 @@ solveBoardRec(Board board, Bool isDeterministic, Coordinate *emptyCells, int emp
         if (solveBoardRec(board, isDeterministic, emptyCells, emptyCellsCount, start + 1)) {
             return true;
         }
+
+        board[currentCoordinate.i][currentCoordinate.j] = 0;
         possibleValuesCount--;
     }
 
