@@ -26,20 +26,24 @@ void printBoard(const Board matrix, const BoolBoard fixed_matrix) {
     char sep[35] = "----------------------------------\n";
 
     for (i = 0; i < 9; i++) {
-        if (i % 3 == 0)
+        if (i % 3 == 0) {
             printf("%s", sep);
+        }
         for (j = 0; j < 9; j++) {
-            if (j % 3 == 0)
+            if (j % 3 == 0) {
                 printf("| ");
-            if (isFixed(fixed_matrix, i, j))
+            }
+            if (isFixed(fixed_matrix, i, j)) {
                 printf(".");
-            else
+            } else {
                 printf(" ");
+            }
 
-            if (matrix[i][j] != 0)
+            if (matrix[i][j] != 0) {
                 printf("%d", matrix[i][j]);
-            else
+            } else {
                 printf(" ");
+            }
             printf(" ");
         }
         printf("|");
