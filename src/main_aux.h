@@ -41,7 +41,7 @@ typedef struct _game {
     BoolBoard fixed_matrix;
 } Game;
 
-Game *createGame(int fixedAmount);
+Game *createGame();
 
 void destroyGame(Game *game);
 

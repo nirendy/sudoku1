@@ -75,7 +75,7 @@ int askUserForHintsAmount() {
     return hintsAmount;
 }
 
-Game *createGame(int fixedAmount) {
+Game *createGame() {
     Game *game = malloc(sizeof(Game));
     game->solved_matrix = (int **) malloc(N * N * sizeof(int *));
     game->user_matrix = (int **) malloc(N * N * sizeof(int *));
@@ -89,12 +89,19 @@ Game *createGame(int fixedAmount) {
         }
     }
 
-    generateGame(game, fixedAmount);
-
     return game;
 }
 
 void destroyGame(Game *game) {
+    {
+        int i;
+        for (i = 0; i < N * M; ++i) {
+            free(game->solved_matrix[i]);
+            free(game->user_matrix[i]);
+            free(game->fixed_matrix[i]);
+        }
+    }
+
     free(game->solved_matrix);
     free(game->user_matrix);
     free(game->fixed_matrix);
