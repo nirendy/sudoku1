@@ -165,13 +165,12 @@ Bool solveBoard(Board board, Board solvedBoard, Bool isDeterministic) {
 }
 
 void generateFixedBoard(BoolBoard board, int fixedAmount) {
-    int i, j, randN, fixedCellsFound = 0;
+    int i, j, fixedCellsFound = 0;
     clearBoard((Board) board);
 
     while (fixedCellsFound < fixedAmount) {
-        randN = randLimit(N * N * M * M);
-        j = randN % (N * M);
-        i = (randN - j) / (N * M);
+        j = randLimit(N * N);
+        i = randLimit(N * N);
         if (board[i][j] == 0) {
             board[i][j] = 1;
             fixedCellsFound++;

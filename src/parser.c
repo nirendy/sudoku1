@@ -49,7 +49,6 @@ void printBoard(const Board matrix, const BoolBoard fixed_matrix) {
 }
 
 Input parseCommand() {
-    /*TODO: get numOfVars from a function*/
     char str[1024];
     char *token, command[10];
     int numOfVars = -1;
