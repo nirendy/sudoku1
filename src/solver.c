@@ -8,7 +8,7 @@ Bool isSolved(Game *game) {
     return emptyCellsCount == 0;
 }
 
-void copyBoard(const Board sourceBoard, Board targetBoard) {
+void copyBoard(Board sourceBoard, Board targetBoard) {
     int i, j;
     for (i = 0; i < N * M; ++i) {
         for (j = 0; j < N * M; ++j) {
@@ -17,7 +17,7 @@ void copyBoard(const Board sourceBoard, Board targetBoard) {
     }
 }
 
-int getEmptyCells(const Board board, Coordinate *emptyCells) {
+int getEmptyCells(Board board, Coordinate *emptyCells) {
     int i, j, emptyCount = 0;
     for (i = 0; i < N * M; ++i) {
         for (j = 0; j < N * M; ++j) {
@@ -39,7 +39,7 @@ void clearBoard(Board board) {
     }
 }
 
-void coordinateNeighbours(Board board, Coordinate coordinate, Coordinate neighbours[3 * N * M - N - M + 1]) {
+void coordinateNeighbours(Coordinate coordinate, Coordinate neighbours[3 * N * M - N - M + 1]) {
     int i, j, k, neighboursCreated = 0;
     Coordinate leftMostBlockCoordinate = createCoordinate(
             coordinate.i - coordinate.i % N,
@@ -76,7 +76,7 @@ int getPossibleValues(Board board, Coordinate coordinate, int *possibleValues) {
         possibleValues[i] = i + 1;
     }
 
-    coordinateNeighbours(board, coordinate, neighbours);
+    coordinateNeighbours(coordinate, neighbours);
 
     for (i = 0; i < 3 * N * M - N - M - 1; ++i) {
         int neighbourValue = board[neighbours[i].i][neighbours[i].j];
@@ -155,7 +155,7 @@ solveBoardRec(Board board, Bool isDeterministic, Coordinate *emptyCells, int emp
 }
 
 
-Bool solveBoard(const Board board, Board solvedBoard, Bool isDeterministic) {
+Bool solveBoard(Board board, Board solvedBoard, Bool isDeterministic) {
     Coordinate emptyCells[N * N * M * M];
     int emptyCellsCount;
     copyBoard(board, solvedBoard);
@@ -164,7 +164,7 @@ Bool solveBoard(const Board board, Board solvedBoard, Bool isDeterministic) {
     return solveBoardRec(solvedBoard, isDeterministic, emptyCells, emptyCellsCount, 0);
 }
 
-void generateFixedBoard(const BoolBoard board, int fixedAmount) {
+void generateFixedBoard(BoolBoard board, int fixedAmount) {
     int i, j, randN, fixedCellsFound = 0;
     clearBoard((Board) board);
 
