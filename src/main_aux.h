@@ -68,9 +68,6 @@ typedef struct _input {
     int value;
 } Input;
 
-Input *createInput();
-
-void DestroyInput();
 
 void printError(Error err, Command command);
 

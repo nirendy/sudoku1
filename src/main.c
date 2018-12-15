@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
      * */
     Input input;
     Bool shouldRestart, isGameOver = false;
-    Game game;
+    Game *game;
     int fixedAmount;
     SP_BUFF_SET();
 
@@ -22,26 +22,25 @@ int main(int argc, char *argv[]) {
         srand(0);
     }
 
-    game = *createGame();
+    game = createGame();
 
     while (!isGameOver) {
         fixedAmount = askUserForHintsAmount();
-        generateGame(&game, fixedAmount);
+        generateGame(game, fixedAmount);
         shouldRestart = false;
-        printBoard(game.user_matrix, game.fixed_matrix);
-
+        printBoard(game->user_matrix, game->fixed_matrix);
         while (!shouldRestart) {
             input = askUserForNextTurn();
 
             switch (input.command) {
                 case SET:
-                    !isSolved(&game) ? setCoordinate(&game, input) : printError(EInvalidCommand, INVALID);
+                    !isSolved(game) ? setCoordinate(game, input) : printError(EInvalidCommand, INVALID);
                     break;
                 case HINT:
-                    !isSolved(&game) ? hint(&game, input.coordinate) : printError(EInvalidCommand, INVALID);
+                    !isSolved(game) ? hint(game, input.coordinate) : printError(EInvalidCommand, INVALID);
                     break;
                 case VALIDATE:
-                    !isSolved(&game) ? validate(&game) : printError(EInvalidCommand, INVALID);
+                    !isSolved(game) ? validate(game) : printError(EInvalidCommand, INVALID);
                     break;
                 case RESTART:
                     shouldRestart = true;
@@ -58,6 +57,6 @@ int main(int argc, char *argv[]) {
         }
 
     }
-    destroyGame(&game);
+    destroyGame(game);
     exit(1);
 }

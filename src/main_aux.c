@@ -77,15 +77,15 @@ int askUserForHintsAmount() {
 
 Game *createGame() {
     Game *game = malloc(sizeof(Game));
-    game->solved_matrix = (int **) malloc(N * N * sizeof(int *));
-    game->user_matrix = (int **) malloc(N * N * sizeof(int *));
-    game->fixed_matrix = (Bool **) malloc(N * N * sizeof(Bool *));
+    game->solved_matrix = (int **) malloc(N * M * sizeof(int *));
+    game->user_matrix = (int **) malloc(N * M * sizeof(int *));
+    game->fixed_matrix = (Bool **) malloc(N * M * sizeof(Bool *));
     {
         int i;
         for (i = 0; i < N * M; ++i) {
-            game->solved_matrix[i] = (int *) malloc(N * N * sizeof(int));
-            game->user_matrix[i] = (int *) malloc(N * N * sizeof(int));
-            game->fixed_matrix[i] = (Bool *) malloc(N * N * sizeof(Bool));
+            game->solved_matrix[i] = (int *) malloc(N * M * sizeof(int));
+            game->user_matrix[i] = (int *) malloc(N * M * sizeof(int));
+            game->fixed_matrix[i] = (Bool *) malloc(N * M * sizeof(Bool));
         }
     }
 
