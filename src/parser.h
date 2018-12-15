@@ -9,6 +9,8 @@
 
 void printBoard(const Board matrix, const BoolBoard fixed_matrix);
 
+int parseHintsAmount();
+
 Input parseCommand();
 
 

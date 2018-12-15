@@ -14,7 +14,7 @@ void printError(Error err, Command command) {
 
     switch (err) {
         case EInvalidNumberOfCells:
-            printf("Error: invalid number of cells to fill (should be between 0 and %d)\n", N * M - 1);
+            printf("Error: invalid number of cells to fill (should be between 0 and %d)\n", N * N * M * M - 1);
             break;
         case ECellIsFixed:
             printf("Error: cell is fixed\n");
@@ -35,10 +35,10 @@ void printError(Error err, Command command) {
 void printPrompt(Prompt prompt, int num1) {
     switch (prompt) {
         case PEnterFixedAmount:
-            printf("Please enter the number of cells to fill [0-%d]:\n", N * M - 1);
+            printf("Please enter the number of cells to fill [0-%d]:\n", N * N * M * M - 1);
             break;
         case PExit:
-            printf("Exiting…\n");
+            printf("Exiting...\n");
             break;
         case PSuccess:
             printf("Puzzle solved successfully\n");
@@ -67,7 +67,12 @@ int randLimit(int limit) {
 }
 
 int askUserForHintsAmount() {
-    return 20;
+    int hintsAmount;
+    do {
+        hintsAmount = parseHintsAmount();
+    } while (hintsAmount < 0);
+
+    return hintsAmount;
 }
 
 Game *createGame(int fixedAmount) {

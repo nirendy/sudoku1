@@ -18,7 +18,7 @@ Bool solveBoard(const Board board, Board solvedBoard, Bool isDeterministic);
 /*void coordinateNeighbours(Game *game, Coordinate coordinate, Coordinate neighbours[2* N * M - N - M + 1]);*/
 
 
-Bool isFinished(Game *game);
+Bool isSolved(Game *game);
 
 
 #endif

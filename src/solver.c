@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "solver.h"
 
-Bool isFinished(Game *game) {
+Bool isSolved(Game *game) {
     Coordinate emptyCells[N * N * M * M];
     int emptyCellsCount;
     emptyCellsCount = getEmptyCells(game->user_matrix, emptyCells);

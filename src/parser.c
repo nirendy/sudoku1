@@ -4,6 +4,23 @@ int isFixed(BoolBoard fixed_matrix, int i, int j) {
     return fixed_matrix[i][j];
 }
 
+int parseHintsAmount() {
+    int hintsAmount;
+    printPrompt(PEnterFixedAmount, 0);
+    if (scanf("%d", &hintsAmount) != 1) {
+        printError(EInvalidNumberOfCells, 0);
+        return -1;
+    }
+
+    if (!(0 <= hintsAmount && hintsAmount <= N * N * M * M - 1)) {
+        printError(EInvalidNumberOfCells, 0);
+        return -1;
+    }
+
+    return hintsAmount;
+}
+
+
 void printBoard(const Board matrix, const BoolBoard fixed_matrix) {
     int i = 0, j = 0;
     char sep[35] = "----------------------------------\n";
@@ -28,7 +45,7 @@ void printBoard(const Board matrix, const BoolBoard fixed_matrix) {
         printf("|");
         printf("\n");
     }
-    printf("%s\n", sep);
+    printf("%s", sep);
 }
 
 Input parseCommand() {

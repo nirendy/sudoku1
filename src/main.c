@@ -26,9 +26,7 @@ int main(int argc, char *argv[]) {
         shouldRestart = false;
         printBoard(game.user_matrix, game.fixed_matrix);
 
-        printBoard(game.solved_matrix, game.fixed_matrix);
-
-        while (!isFinished(&game) && !shouldRestart) {
+        while (!isSolved(&game) && !shouldRestart) {
             input = askUserForNextTurn();
 
             switch (input.command) {
@@ -45,7 +43,9 @@ int main(int argc, char *argv[]) {
                     shouldRestart = true;
                     break;
                 case EXIT:
+                    shouldRestart = true;
                     isGameOver = true;
+                    printPrompt(PExit, INVALID);
                     break;
                 case INVALID:
                     printf("Unreachable Code Error");
