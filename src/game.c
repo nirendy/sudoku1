@@ -28,6 +28,8 @@ void setCoordinate(Game *game, Input input) {
     } else {
         game->user_matrix[input.coordinate.i][input.coordinate.j] = input.value;
         printBoard(game->user_matrix, game->fixed_matrix);
+        if (isSolved(game))
+        	printPrompt(PSuccess,0);
     }
 }
 

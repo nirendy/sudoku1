@@ -25,18 +25,19 @@ int main(int argc, char *argv[]) {
         shouldRestart = false;
         printBoard(game.user_matrix, game.fixed_matrix);
 
-        while (!isSolved(&game) && !shouldRestart) {
+        while (!shouldRestart) {
             input = askUserForNextTurn();
 
             switch (input.command) {
                 case SET:
-                    setCoordinate(&game, input);
+                	!isSolved(&game) ? setCoordinate(&game, input): printError(EInvalidCommand, INVALID);
+
                     break;
                 case HINT:
-                    hint(&game, input.coordinate);
+                	!isSolved(&game) ?  hint(&game, input.coordinate): printError(EInvalidCommand, INVALID);
                     break;
                 case VALIDATE:
-                    validate(&game);
+                	!isSolved(&game) ? validate(&game): printError(EInvalidCommand, INVALID);
                     break;
                 case RESTART:
                     shouldRestart = true;
@@ -51,6 +52,7 @@ int main(int argc, char *argv[]) {
                     exit(0);
             }
         }
+
     }
     destroyGame(&game);
     exit(1);
