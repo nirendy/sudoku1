@@ -53,8 +53,6 @@ typedef struct _coordinate {
 
 Coordinate createCoordinate(int i, int j);
 
-void DestroyCoordinate();
-
 typedef enum _command {
     SET,
     HINT,
@@ -85,3 +83,4 @@ int askUserForHintsAmount();
 int randLimit(int limit);
 
 #endif
+
