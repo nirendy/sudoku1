@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     Bool shouldRestart, isGameOver = false;
     Game game;
     int fixedAmount;
+    SP_BUFF_SET();
 
     srand((unsigned int) strtol(*(argv + 1), (char **) NULL, 10));
 

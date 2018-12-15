@@ -6,9 +6,11 @@ int isFixed(BoolBoard fixed_matrix, int i, int j) {
 
 int parseHintsAmount() {
     int hintsAmount;
+    char c;
     printPrompt(PEnterFixedAmount, 0);
     if (scanf("%d", &hintsAmount) != 1) {
         printError(EInvalidNumberOfCells, 0);
+        scanf(" %c", &c);
         return -1;
     }
 
