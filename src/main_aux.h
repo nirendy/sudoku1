@@ -41,7 +41,7 @@ typedef struct _game {
     BoolBoard fixed_matrix;
 } Game;
 
-Game *createGame(int fixedAmount);
+Game *createGame();
 
 void destroyGame(Game *game);
 
@@ -52,8 +52,6 @@ typedef struct _coordinate {
 } Coordinate;
 
 Coordinate createCoordinate(int i, int j);
-
-void DestroyCoordinate();
 
 typedef enum _command {
     SET,
@@ -85,3 +83,4 @@ int askUserForHintsAmount();
 int randLimit(int limit);
 
 #endif
+

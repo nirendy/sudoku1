@@ -17,13 +17,11 @@ int main(int argc, char *argv[]) {
     SP_BUFF_SET();
 
     srand((unsigned int) strtol(*(argv + 1), (char **) NULL, 10));
+    game = *createGame();
 
     while (!isGameOver) {
         fixedAmount = askUserForHintsAmount();
-        /*
-         * puzzle generation:
-         * */
-        game = *createGame(fixedAmount);
+        generateGame(&game, fixedAmount);
         shouldRestart = false;
         printBoard(game.user_matrix, game.fixed_matrix);
 
@@ -55,6 +53,5 @@ int main(int argc, char *argv[]) {
         }
     }
     destroyGame(&game);
-
     exit(1);
 }
