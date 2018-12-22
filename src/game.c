@@ -9,14 +9,17 @@ Bool isCoordinateFixed(Game *game, Coordinate coordinate) {
 Bool isValueInNeighbours(Game *game, Coordinate coordinate, int value) {
     int possibleValues[N * M];
     int i, possibleValuesCount;
+
     possibleValuesCount = getPossibleValues(game->user_matrix, coordinate, possibleValues);
 
+    /*will return false if the value is found in one of the neighbours*/
     for (i = 0; i < possibleValuesCount; ++i) {
         if (possibleValues[i] == value) {
             return false;
         }
     }
 
+    /* did not find - return true*/
     return true;
 }
 
@@ -24,10 +27,16 @@ void setCoordinate(Game *game, Input input) {
     if (isCoordinateFixed(game, input.coordinate)) {
         printError(ECellIsFixed, INVALID);
     } else if (input.value != 0 && isValueInNeighbours(game, input.coordinate, input.value)) {
+        /* the intention is not to clean,
+         * AND
+         * one of the neighbours has the value
+         * */
         printError(EValueIsInvalid, INVALID);
     } else {
         game->user_matrix[input.coordinate.i][input.coordinate.j] = input.value;
         printBoard(game->user_matrix, game->fixed_matrix);
+
+        /*checks if game is solved*/
         if (isSolved(game)) {
             printPrompt(PSuccess, 0);
         }
