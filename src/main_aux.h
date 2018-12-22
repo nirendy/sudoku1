@@ -6,8 +6,6 @@
 
 #define N 3 /* block height*/
 #define M 3 /* block width*/
-#define Sep _
-#define fixedPref .
 
 typedef enum _bool {
     false = 0,
