@@ -1,0 +1,13 @@
+0
+set 7 8 9
+set 8 	7 	6
+validate
+hint 1 1
+hint 8
+set 
+restart
+70
+
+blablabla
+
+exit

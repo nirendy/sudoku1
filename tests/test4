@@ -1,0 +1,17 @@
+0
+
+set 1 1 4
+
+set 2 3 4
+set 4 5 7
+hint 1 1
+validate 12
+hint 1 1 4
+hint 3
+hint
+set
+set 1
+set 1 2
+set 1 2 3 4
+
+exit

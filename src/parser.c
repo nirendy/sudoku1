@@ -8,6 +8,11 @@ int parseHintsAmount() {
     int hintsAmount;
     printPrompt(PEnterFixedAmount, 0);
     if (scanf("%d", &hintsAmount) != 1) {
+        char isEOF;
+        if (scanf("%c", &isEOF) != EOF) {
+            /* This part is just that the programs works as the example program*/
+            printf("Error: not a number\n");
+        }
         printPrompt(PExit, 0);
         exit(1);
     }
@@ -62,7 +67,10 @@ Input parseCommand() {
     returnedInput.command = INVALID;
 
     do {
-        fgets(str, 1024, stdin);
+        if (fgets(str, 1024, stdin) == NULL) {
+            printPrompt(PExit, 0);
+            exit(1);
+        }
         token = strtok(str, " \t\r\n");
     } while (token == NULL);
 
@@ -129,7 +137,7 @@ Input parseCommand() {
         return returnedInput;
     }
 
-    returnedInput.coordinate = createCoordinate(x - 1, y - 1);
+    returnedInput.coordinate = createCoordinate(y - 1, x - 1);
     returnedInput.value = z;
 
     return returnedInput;
