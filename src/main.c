@@ -16,6 +16,9 @@ int main(int argc, char *argv[]) {
     int fixedAmount;
     SP_BUFF_SET();
 
+    /*
+     * Set Seed, default to 0
+     * */
     if (argc > 1) {
         srand((unsigned int) strtol(*(argv + 1), (char **) NULL, 10));
     } else {
@@ -24,11 +27,18 @@ int main(int argc, char *argv[]) {
 
     game = createGame();
 
+    /*
+     * Keep doing until exit
+     * */
     while (!isGameOver) {
         fixedAmount = askUserForHintsAmount();
         generateGame(game, fixedAmount);
         shouldRestart = false;
         printBoard(game->user_matrix, game->fixed_matrix);
+
+        /*
+         * Keep doing until restart
+         * */
         while (!shouldRestart) {
             input = askUserForNextTurn();
 

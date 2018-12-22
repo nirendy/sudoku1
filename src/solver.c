@@ -1,11 +1,29 @@
 #include <stdio.h>
 #include "solver.h"
 
-Coordinate emptyCells[N * N * M * M];
+int getEmptyCells(Board board, Coordinate *emptyCells) {
+    int i, j, emptyCount = 0;
+
+    /* go over each cell of the matrix*/
+    for (i = 0; i < N * M; ++i) {
+        for (j = 0; j < N * M; ++j) {
+            if (board[i][j] == 0) {
+                /* if empty*/
+                emptyCells[emptyCount] = createCoordinate(i, j);
+                emptyCount++;
+            }
+        }
+    }
+    return emptyCount;
+}
 
 Bool isSolved(Game *game) {
+    Coordinate emptyCells[N * N * M * M];
     int emptyCellsCount;
+
     emptyCellsCount = getEmptyCells(game->user_matrix, emptyCells);
+
+    /* if 0 empty cells */
     return emptyCellsCount == 0;
 }
 
@@ -16,19 +34,6 @@ void copyBoard(Board sourceBoard, Board targetBoard) {
             targetBoard[i][j] = sourceBoard[i][j];
         }
     }
-}
-
-int getEmptyCells(Board board, Coordinate *emptyCells) {
-    int i, j, emptyCount = 0;
-    for (i = 0; i < N * M; ++i) {
-        for (j = 0; j < N * M; ++j) {
-            if (board[i][j] == 0) {
-                emptyCells[emptyCount] = createCoordinate(i, j);
-                emptyCount++;
-            }
-        }
-    }
-    return emptyCount;
 }
 
 void clearBoard(Board board) {
@@ -42,11 +47,14 @@ void clearBoard(Board board) {
 
 void coordinateNeighbours(Coordinate coordinate, Coordinate neighbours[3 * N * M - N - M + 1]) {
     int i, j, k, neighboursCreated = 0;
+
+    /* find leftmost coordinate*/
     Coordinate leftMostBlockCoordinate = createCoordinate(
             coordinate.i - coordinate.i % N,
             coordinate.j - coordinate.j % M
     );
 
+    /* go over all cell in the block*/
     for (i = leftMostBlockCoordinate.i + 0; i < leftMostBlockCoordinate.i + N; ++i) {
         for (j = leftMostBlockCoordinate.j + 0; j < leftMostBlockCoordinate.j + M; ++j) {
             if (i != coordinate.i && j != coordinate.j) {
@@ -56,6 +64,7 @@ void coordinateNeighbours(Coordinate coordinate, Coordinate neighbours[3 * N * M
         }
     }
 
+    /* go over all cells in the column and row expect of the one's in the block*/
     for (k = 0; k < N * M; ++k) {
         if (coordinate.i != k) {
             neighbours[neighboursCreated] = createCoordinate(k, coordinate.j);

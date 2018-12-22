@@ -1,0 +1,12 @@
+17
+70
+set 1 7 9
+set 2 7 1
+set 2 8 8
+hint 2 8 9 8
+set 2 8 1
+hint 1 1 1
+exit
+
+-- add if you want to fuck the backtracking
+validate
