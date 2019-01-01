@@ -7,7 +7,7 @@
 
 
 void printError(Error err, Command command) {
-    if (err == EFunctionFailed && command == INVALID) {
+    if (err == EFunctionFailed && command == COMMAND_INVALID) {
         printf("Unreachable Code Error");
         exit(0);
     }
@@ -66,13 +66,17 @@ int randLimit(int limit) {
     return rand() % limit;
 }
 
-int askUserForHintsAmount() {
-    int hintsAmount;
+/*return 0 only if finished successfully*/
+FinishCode askUserForHintsAmount(int *hintsAmount) {
+    FinishCode finishCode;
     do {
-        hintsAmount = parseHintsAmount();
-    } while (hintsAmount < 0);
+        finishCode = parseHintsAmount(hintsAmount);
+        if (!(finishCode == FC_SUCCESS || finishCode == FC_INVALID_RECOVERABLE)) {
+            return finishCode;
+        }
+    } while (finishCode == FC_INVALID_RECOVERABLE);
 
-    return hintsAmount;
+    return FC_SUCCESS;
 }
 
 Game *createGame() {
@@ -108,12 +112,14 @@ void destroyGame(Game *game) {
     free(game);
 }
 
-Input askUserForNextTurn() {
-    Input input;
-
+FinishCode askUserForNextTurn(Input *input) {
+    FinishCode finishCode;
     do {
-        input = parseCommand();
-    } while (input.command == INVALID);
+        finishCode = parseCommand(input);
+        if (!(finishCode == FC_SUCCESS || finishCode == FC_INVALID_RECOVERABLE)) {
+            return finishCode;
+        }
+    } while (finishCode == FC_INVALID_RECOVERABLE);
 
-    return input;
+    return FC_SUCCESS;
 }

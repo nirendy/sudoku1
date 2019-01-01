@@ -25,13 +25,13 @@ Bool isValueInNeighbours(Game *game, Coordinate coordinate, int value) {
 
 void setCoordinate(Game *game, Input input) {
     if (isCoordinateFixed(game, input.coordinate)) {
-        printError(ECellIsFixed, INVALID);
+        printError(ECellIsFixed, COMMAND_INVALID);
     } else if (input.value != 0 && isValueInNeighbours(game, input.coordinate, input.value)) {
         /* the intention is not to clean,
          * AND
          * one of the neighbours has the value
          * */
-        printError(EValueIsInvalid, INVALID);
+        printError(EValueIsInvalid, COMMAND_INVALID);
     } else {
         game->user_matrix[input.coordinate.i][input.coordinate.j] = input.value;
         printBoard(game->user_matrix, game->fixed_matrix);

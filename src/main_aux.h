@@ -23,6 +23,14 @@ typedef enum _error {
     EFunctionFailed
 } Error;
 
+typedef enum _finish_code {
+    FC_SUCCESS=0,
+    FC_EOF,
+    FC_INVALID_RECOVERABLE,
+    FC_INVALID_TERMINATE,
+    FC_UNEXPECTED_ERROR
+} FinishCode;
+
 typedef enum _prompt {
     PEnterFixedAmount,
     PExit,
@@ -52,12 +60,12 @@ typedef struct _coordinate {
 Coordinate createCoordinate(int i, int j);
 
 typedef enum _command {
-    SET,
-    HINT,
-    VALIDATE,
-    RESTART,
-    EXIT,
-    INVALID
+    COMMAND_SET,
+    COMMAND_HINT,
+    COMMAND_VALIDATE,
+    COMMAND_RESTART,
+    COMMAND_EXIT,
+    COMMAND_INVALID
 } Command;
 
 typedef struct _input {
@@ -71,9 +79,9 @@ void printError(Error err, Command command);
 
 void printPrompt(Prompt prompt, int num1);
 
-Input askUserForNextTurn();
+FinishCode askUserForNextTurn(Input *input);
 
-int askUserForHintsAmount();
+FinishCode askUserForHintsAmount(int *hintsAmount);
 
 int randLimit(int limit);
 

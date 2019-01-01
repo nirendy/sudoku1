@@ -4,32 +4,33 @@ int isFixed(BoolBoard fixed_matrix, int i, int j) {
     return fixed_matrix[i][j];
 }
 
-int parseHintsAmount() {
-    int hintsAmount;
+/*return 0 only if finished successfully */
+FinishCode parseHintsAmount(int *hintsAmount) {
     printPrompt(PEnterFixedAmount, 0);
 
     /*
      * read input
      * */
-    if (scanf("%d", &hintsAmount) != 1) {
+    if (scanf("%d", hintsAmount) != 1) {
         char isEOF;
         if (scanf("%c", &isEOF) != EOF) {
             /* This part is just that the programs works as the example program*/
             printf("Error: not a number\n");
+            return FC_EOF;
         }
-        printPrompt(PExit, 0);
-        exit(1);
+        return FC_INVALID_TERMINATE;
     }
 
     /*
      * Validate input
      * */
-    if (!(0 <= hintsAmount && hintsAmount <= N * N * M * M - 1)) {
+    if (!(0 <= *hintsAmount && *hintsAmount <= N * N * M * M - 1)) {
         printError(EInvalidNumberOfCells, 0);
-        return -1;
+        *hintsAmount = -1;
+        return FC_INVALID_RECOVERABLE;
     }
 
-    return hintsAmount;
+    return FC_SUCCESS;
 }
 
 void printBoard(const Board matrix, const BoolBoard fixed_matrix) {
@@ -63,22 +64,20 @@ void printBoard(const Board matrix, const BoolBoard fixed_matrix) {
     printf("%s", sep);
 }
 
-Input parseCommand() {
+FinishCode parseCommand(Input *returnedInput) {
     char str[1024];
     char *token, command[10];
     int numOfVars = -1;
     int x = 0, y = 0, value = -1;
     int index = 0;
-    Input returnedInput;
-    returnedInput.command = INVALID;
+    returnedInput->command = COMMAND_INVALID;
 
     /*
      * Do until a non empty line received
      * */
     do {
         if (fgets(str, 1024, stdin) == NULL) {
-            printPrompt(PExit, 0);
-            exit(1);
+            return FC_EOF;
         }
         token = strtok(str, " \t\r\n");
     } while (token == NULL);
@@ -88,30 +87,30 @@ Input parseCommand() {
      * */
     if (!strcmp(token, "set")) {
         numOfVars = 3;
-        returnedInput.command = SET;
+        returnedInput->command = COMMAND_SET;
     }
 
     if (!strcmp(token, "hint")) {
         numOfVars = 2;
-        returnedInput.command = HINT;
+        returnedInput->command = COMMAND_HINT;
     }
 
     if (!strcmp(token, "validate") || !strcmp(token, "restart") || !strcmp(token, "exit")) {
         numOfVars = 0;
         if (!strcmp(token, "validate")) {
-            returnedInput.command = VALIDATE;
+            returnedInput->command = COMMAND_VALIDATE;
         }
         if (!strcmp(token, "restart")) {
-            returnedInput.command = RESTART;
+            returnedInput->command = COMMAND_RESTART;
         }
         if (!strcmp(token, "exit")) {
-            returnedInput.command = EXIT;
+            returnedInput->command = COMMAND_EXIT;
         }
     }
 
     if (numOfVars == -1) {
-        printError(EInvalidCommand, INVALID);
-        return returnedInput;
+        printError(EInvalidCommand, COMMAND_INVALID);
+        return FC_INVALID_RECOVERABLE;
     }
 
     /*
@@ -139,7 +138,7 @@ Input parseCommand() {
                 break;
             default:
                 printf("Unreachable Code Error");
-                exit(0);
+                return FC_UNEXPECTED_ERROR;
         }
 
         index++;
@@ -154,14 +153,14 @@ Input parseCommand() {
             (numOfVars >= 2 && (x == 0 || y == 0))
             || (numOfVars == 3 && value == -1)
             ) {
-        returnedInput.command = INVALID;
-        printError(EInvalidCommand, INVALID);
-        return returnedInput;
+        returnedInput->command = COMMAND_INVALID;
+        printError(EInvalidCommand, COMMAND_INVALID);
+        return FC_INVALID_RECOVERABLE;
     }
 
-    returnedInput.coordinate = createCoordinate(y - 1, x - 1);
-    returnedInput.value = value;
+    returnedInput->coordinate = createCoordinate(y - 1, x - 1);
+    returnedInput->value = value;
 
-    return returnedInput;
+    return FC_SUCCESS;
 }
 
